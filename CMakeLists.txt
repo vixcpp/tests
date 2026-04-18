@@ -70,12 +70,22 @@ if (TESTS_SOURCES)
       $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
   )
 
-  if (TARGET vix_warnings)
-    target_link_libraries(vix_tests PRIVATE vix_warnings)
+  if (NOT MSVC)
+    target_compile_options(vix_tests PRIVATE
+      -Wall
+      -Wextra
+      -Wpedantic
+    )
   endif()
 
-  if (VIX_ENABLE_SANITIZERS AND TARGET vix_sanitizers)
-    target_link_libraries(vix_tests PRIVATE vix_sanitizers)
+  if (VIX_ENABLE_SANITIZERS AND NOT MSVC)
+    target_compile_options(vix_tests PRIVATE
+      -fno-omit-frame-pointer
+      -fsanitize=address,undefined
+    )
+    target_link_options(vix_tests PRIVATE
+      -fsanitize=address,undefined
+    )
   endif()
 
   target_compile_definitions(vix_tests
