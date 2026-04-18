@@ -71,11 +71,11 @@ if (TESTS_SOURCES)
   )
 
   if (TARGET vix_warnings)
-    target_link_libraries(vix_tests PUBLIC vix_warnings)
+    target_link_libraries(vix_tests PRIVATE vix_warnings)
   endif()
 
   if (VIX_ENABLE_SANITIZERS AND TARGET vix_sanitizers)
-    target_link_libraries(vix_tests PUBLIC vix_sanitizers)
+    target_link_libraries(vix_tests PRIVATE vix_sanitizers)
   endif()
 
   target_compile_definitions(vix_tests
@@ -115,15 +115,6 @@ else()
   target_compile_definitions(vix_tests
     INTERFACE
       $<$<BOOL:${VIX_TESTS_ENABLE_CTEST}>:VIX_TESTS_ENABLE_CTEST=1>
-  )
-
-  if (VIX_ENABLE_SANITIZERS AND TARGET vix_sanitizers)
-    target_link_libraries(vix_tests INTERFACE vix_sanitizers)
-  endif()
-
-  install(TARGETS vix_tests
-    EXPORT VixTargets
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
   )
 endif()
 
