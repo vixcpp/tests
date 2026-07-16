@@ -1,0 +1,46 @@
+{
+  "namespace": "vix",
+  "name": "tests",
+  "displayName": "Vix Tests",
+  "version": "0.1.1",
+  "type": "library",
+  "license": "MIT",
+  "description": "Dependency-light native C++ testing utilities for Vix modules and standalone projects.",
+  "repository": "https://github.com/vixcpp/tests.git",
+  "documentation": "https://github.com/vixcpp/tests#readme",
+  "include": "include",
+  "standard": "c++20",
+  "keywords": [
+    "vix",
+    "cpp",
+    "tests",
+    "testing",
+    "assertions"
+  ],
+  "authors": [
+    {
+      "name": "Gaspard Kirira"
+    }
+  ],
+  "maintainers": [
+    {
+      "name": "Gaspard Kirira"
+    }
+  ],
+  "exports": {
+    "modules": [
+      "vix::tests"
+    ],
+    "namespaces": [
+      "vix::tests"
+    ]
+  },
+  "constraints": {
+    "platforms": [
+      "linux",
+      "macos",
+      "windows"
+    ]
+  },
+  "deps": []
+}
