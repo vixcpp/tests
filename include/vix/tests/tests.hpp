@@ -13,8 +13,8 @@
  *  Vix.cpp
  */
 
-#ifndef VIX_TESTS_HPP
-#define VIX_TESTS_HPP
+#ifndef VIX_TESTS_TESTS_HPP
+#define VIX_TESTS_TESTS_HPP
 
 #include <vix/tests/Version.hpp>
 #include <vix/tests/Assert.hpp>
@@ -26,4 +26,4 @@
 #include <vix/tests/Timer.hpp>
 #include <vix/tests/Colors.hpp>
 
-#endif // VIX_TESTS_HPP
+#endif // VIX_TESTS_TESTS_HPP
