@@ -134,30 +134,35 @@ if (NOT (DEFINED VIX_UMBRELLA_BUILD AND VIX_UMBRELLA_BUILD))
           FILES_MATCHING PATTERN "*.hpp" PATTERN "*.h")
 endif()
 
-# Package config
-configure_package_config_file(
-  "${CMAKE_CURRENT_SOURCE_DIR}/cmake/vix_testsConfig.cmake.in"
-  "${CMAKE_CURRENT_BINARY_DIR}/vix_testsConfig.cmake"
-  INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/vix_tests"
-)
+# Package config is part of the install contract.  In umbrella builds that
+# explicitly disable installation, do not create a second export invocation:
+# the root export (and its public Asio dependency) is intentionally absent.
+if (NOT (DEFINED VIX_UMBRELLA_BUILD AND VIX_UMBRELLA_BUILD)
+    OR VIX_ENABLE_INSTALL)
+  configure_package_config_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/vix_testsConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/vix_testsConfig.cmake"
+    INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/vix_tests"
+  )
 
-write_basic_package_version_file(
-  "${CMAKE_CURRENT_BINARY_DIR}/vix_testsConfigVersion.cmake"
-  VERSION ${PROJECT_VERSION}
-  COMPATIBILITY SameMajorVersion
-)
+  write_basic_package_version_file(
+    "${CMAKE_CURRENT_BINARY_DIR}/vix_testsConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+  )
 
-install(FILES
-  "${CMAKE_CURRENT_BINARY_DIR}/vix_testsConfig.cmake"
-  "${CMAKE_CURRENT_BINARY_DIR}/vix_testsConfigVersion.cmake"
-  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/vix_tests"
-)
+  install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/vix_testsConfig.cmake"
+    "${CMAKE_CURRENT_BINARY_DIR}/vix_testsConfigVersion.cmake"
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/vix_tests"
+  )
 
-install(EXPORT VixTargets
-  FILE VixTargets.cmake
-  NAMESPACE vix::
-  DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/vix_tests"
-)
+  install(EXPORT VixTargets
+    FILE VixTargets.cmake
+    NAMESPACE vix::
+    DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/vix_tests"
+  )
+endif()
 
 # Self-tests
 if (VIX_TESTS_BUILD_TESTS)
